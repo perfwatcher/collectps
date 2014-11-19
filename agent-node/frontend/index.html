@@ -1,0 +1,80 @@
+﻿<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>CollectPS</title>
+		<link rel="stylesheet" type="text/css" href="collectps.css">
+		<script type="text/javascript" src="jquery-2.1.1.min.js"></script>
+		<script type="text/javascript">
+			function notify (data) {
+				if(typeof data.error !== 'undefined') {
+					alert('Error: ' + data.error);
+				} else if (typeof data.message !== 'undefined') {
+					alert(data.message);
+					window.location = '/';
+				}
+			}
+			$(document).ready(function() {
+				$.getJSON('/version', function(data) {
+					$('#version').html(data.version);
+				});
+				$.getJSON('/collectps_pid', function(data) {
+					$('#collectps_pid').html(data.collectps_pid);
+				});
+				$.getJSON('/collectps_network', function(data) {
+					$(data).each(function(i,n) {
+						$('<tr><td>'+n.host+'</td><td>'+n.port+'</td></tr>').appendTo('#collectps_network__servers');
+					});
+				});
+				$.getJSON('/httpconfig/port', function(data) {
+					$('#collectps_httpconfig__port').val(data.cpsHTTPPort);
+				});
+				$('#submit__collectps_httpconfig__authentication').click(function () {
+					$.post('/httpconfig/account', { user: $('#collectps_httpconfig__user').val(), password: $('#collectps_httpconfig__password').val() }, function( data ) {
+						notify(data);
+					});
+				});
+				$('#submit__collectps_httpconfig__port').click(function () {
+					$.post('/httpconfig/port', { port: $('#collectps_httpconfig__port').val() }, function( data ) {
+						notify(data);
+					});
+				});
+				$('#submit__process__stop').click(function () {
+					$.post('/process/stop', function( data ) {
+						notify(data);
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="block_information" class="configuration_block">
+			<h1>CollectPS information</h1>
+			<table>
+				<tr><th>Version</th><td><span id="version" /></td></tr>
+				<tr><th>PID</th><td><span id="collectps_pid" /></td></tr>
+			</table>
+		</div>
+		<div id="block_action" class="configuration_block">
+			<h1>CollectPS Service</h1>
+			<input type="submit" name="submit__process__stop" id="submit__process__stop" value="Stop / Restart" /> <span>(Configure recovery option in CollectPS Windows service to make it restart on stop)</span>
+		</div>
+		<div id="block_collectps_httpconfig" class="configuration_block">
+			<h1>CollectPS HTTP configuration tool</h1>
+			<h2>Admin user</h2>
+			<span>User :</span> <span><input type="text" name="collectps_httpconfig__user" id="collectps_httpconfig__user" /></span>
+			<span>password</span> <span><input type="text" name="collectps_httpconfig__password" id="collectps_httpconfig__password" /></span>
+			<input type="submit" name="submit__collectps_httpconfig__authentication" id="submit__collectps_httpconfig__authentication" />
+			<h2>Server port</h2>
+			<span>Port</span> <span><input type="text" name="port" id="collectps_httpconfig__port" /></span>
+			<input type="submit" name="submit__collectps_httpconfig__port" id="submit__collectps_httpconfig__port" />
+		</div>
+		<div id="block_collectps_network" class="configuration_block">
+			<h1>CollectPS network configuration</h1>
+			<p>collectps is sending metrics to those servers :</p>
+			<table id="collectps_network__servers">
+				<tr><th>CollectPS server</th><th>port</th></tr>
+			</table>
+		</div>
+	</body>
+</html>
