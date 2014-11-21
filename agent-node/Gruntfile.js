@@ -35,8 +35,11 @@ module.exports = function(grunt) {
   },
   copy: {
     node: {
-      src: 'bin/node-0.10.32-x64.exe',
-      dest: 'build/node.exe',
+      files: [
+          { src: 'bin/node-0.10.32-x64.exe', dest: 'build/node.exe', },
+          { src: 'bin/node-0.10.32-x86.exe', dest: 'build/node32.exe', },
+          { src: 'bin/node-0.10.32-x64.exe', dest: 'build/node64.exe', },
+        ]
     },
     sources: {
       options: {
@@ -55,8 +58,8 @@ module.exports = function(grunt) {
       dest: 'build/collectps.nsi',
       options: {
         process: function (content, srcpath) {
-          content = content.replace(/ *Name +".*" */g, 'Name "'+pkg.name+'"');
-          content = content.replace(/ *OutFile +".*" */g, 'OutFile "'+pkg.name+'-'+pkg.version+'.exe"');
+		  content = content.replace(/ *\!define PROJECTNAME +".*" */g, '!define PROJECTNAME "'+pkg.name+'"');
+		  content = content.replace(/ *\!define VERSION +".*" */g, '!define VERSION "'+pkg.version+'"');
           return(content);
         }
       }
