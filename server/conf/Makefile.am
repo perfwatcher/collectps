@@ -1,0 +1,1 @@
+nobase_dist_sysconf_DATA=collectps.conf-dist

@@ -1,0 +1,3 @@
+CollectPS
+
+Daemon that runs as a server to receive agents process metrics and store them
