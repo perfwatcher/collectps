@@ -521,7 +521,7 @@ char *object_buffer_to_json(object_buffer_t *obj) { /* {{{ */
     GList *gl_hostname = NULL;
     GList *gl_cdtime = NULL;
     GList *gl_pid = NULL;
-    GList *gl_cmd = NULL;
+    GList *gl_name = NULL;
     size_t maxlen = 0;
     size_t pos = 0;
     size_t pos_name = 0;
@@ -580,8 +580,8 @@ char *object_buffer_to_json(object_buffer_t *obj) { /* {{{ */
                     gl_pid = gl->next;
                 } else if(is_hash_key && (0 == strcmp("pid", (char *)buf->buf))) {
                     gl_pid = gl->next;
-                } else if(is_hash_key && (0 == strcmp("cmd", (char *)buf->buf))) {
-                    gl_cmd = gl->next;
+                } else if(is_hash_key && (0 == strcmp("Name", (char *)buf->buf))) {
+                    gl_name = gl->next;
                 }
             }
         }
@@ -593,10 +593,10 @@ char *object_buffer_to_json(object_buffer_t *obj) { /* {{{ */
     if(NULL == gl_hostname) goto object_buffer_to_json__failed;
     if(NULL == gl_cdtime) goto object_buffer_to_json__failed;
     if(NULL == gl_pid) goto object_buffer_to_json__failed;
-    if(NULL == gl_cmd) goto object_buffer_to_json__failed;
+    if(NULL == gl_name) goto object_buffer_to_json__failed;
 
     maxlen += strlen_escape_json((char *)((packet_buffer_t *)(gl_pid->data))->buf);
-    maxlen += strlen_escape_json((char *)((packet_buffer_t *)(gl_cmd->data))->buf);
+    maxlen += strlen_escape_json((char *)((packet_buffer_t *)(gl_name->data))->buf);
     maxlen += strlen_escape_json((char *)((packet_buffer_t *)(gl_hostname->data))->buf);
     maxlen += sizeof("\\\\");
 
@@ -623,7 +623,7 @@ char *object_buffer_to_json(object_buffer_t *obj) { /* {{{ */
     maxlen -= l-1;
     rs[pos-1] = '/'; /* replace the last coma with a slash */
 
-    l = packet_buffer_to_json(gl_cmd->data, rs+pos, maxlen, FALSE, TRUE);
+    l = packet_buffer_to_json(gl_name->data, rs+pos, maxlen, FALSE, TRUE);
     if((-1 == l) || (l > maxlen)) goto object_buffer_to_json__failed;
     pos += l-1;
     maxlen -= l-1;
