@@ -18,7 +18,7 @@
 
 #include <collectps.h>
 
-extern config_t global_config;
+extern cps_config_t global_config;
 extern GThreadPool *workers_thread_pool;
 
 /* NOTE : a lot of code here is borrowed from https://github.com/dhess/echoev/
@@ -411,6 +411,7 @@ static listener_io *make_listener(const struct sockaddr *addr, socklen_t addr_le
 
 int uev_start_listeners(struct ev_loop *loop) {
     ip_list_t *ip;
+    char port[20];
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
     hints.ai_socktype = SOCK_STREAM;
@@ -422,7 +423,8 @@ int uev_start_listeners(struct ev_loop *loop) {
         int err = 0;
 
         hints.ai_family = ip->family;
-        if(0 != (err = getaddrinfo(ip->addr, global_config.listener__port, &hints, &res))) {
+        snprintf(port, sizeof(port), "%d", global_config.listener__port);
+        if(0 != (err = getaddrinfo(ip->addr, port, &hints, &res))) {
             L (LOGLEVEL_CRITICAL, "getaddrinfo failed : %s", gai_strerror(err));
             close_all_and_exit(EXIT_FAILURE);
         }

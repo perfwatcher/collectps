@@ -15,7 +15,7 @@ typedef enum {
 } loglevel_e;
 
 typedef struct ip_list_t {
-    char *addr;
+    const char *addr;
     int family;
     struct ip_list_t *next;
 } ip_list_t;
@@ -27,33 +27,33 @@ typedef struct {
     gboolean daemonize;
 
     /* [listener] */
-    char *listener__port;
+    unsigned int listener__port;
     ip_list_t *listener__ip_list;
     size_t listener__buffer_max_size;
 
     /* [daemon] */
-    char *daemon__working_dir;
+    const char *daemon__working_dir;
     mode_t daemon__umask;
 
     /* [workers] */
     gint workers__threads_nb_max;
 
     /* [log] */
-    char *log__file;
+    const char *log__file;
     gint log__level;
 
     /* [influxdb] */
-    char *influxdb__database;
-    char *influxdb__url;
-    char *influxdb__username;
-    char *influxdb__password;
-    char *influxdb__proxy_url;
-    long influxdb__proxy_port;
+    const char *influxdb__database;
+    const char *influxdb__url;
+    const char *influxdb__username;
+    const char *influxdb__password;
+    const char *influxdb__proxy_url;
+    unsigned long influxdb__proxy_port;
 
     /* [httpd] */
     gint httpd__port;
 
-} config_t;
+} cps_config_t;
 
 #include "main.h"
 #include "util_log.h"

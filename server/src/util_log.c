@@ -10,7 +10,7 @@
 
 #include "collectps.h"
 
-extern config_t global_config;
+extern cps_config_t global_config;
 static loglevel_e log_level = 0;
 
 const char *log_level_string(loglevel_e level) { /* {{{ */

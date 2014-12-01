@@ -1,4 +1,4 @@
-[log]
+log: {
 # level 0 critical
 # level 1 error / important
 # level 2 warning
@@ -6,27 +6,33 @@
 # level 4 debug
 # level 5 debug verbose
 #
-level=2
-file=stdout
+    level=2;
+    file="stdout";
+};
 
-[httpd]
-port=25926
+httpd: {
+    port=25926;
+};
 
-[listener]
-interface=all
-port=25927
+listener: {
+    interface=["all"];
+    port=25927;
+};
 
-[workers]
-threads_nb_max=10
+workers: {
+    threads_nb_max=10;
+};
 
-[daemon]
-working_dir=/var/run/collectps
-umask=022
+daemon: {
+    working_dir="/var/run/collectps";
+    umask="0022";
+};
 
-[influxdb]
-database=process
-url=http://localhost:8086/db
-username=root
-password=root
-proxy_url=
-proxy_port=
+influxdb: {
+    database="process";
+    url="http://localhost:8086/db";
+    username="root";
+    password="root";
+    proxy_url="";
+    proxy_port="";
+};

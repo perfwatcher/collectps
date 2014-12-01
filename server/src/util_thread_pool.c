@@ -10,7 +10,7 @@
 #include "config.h"
 #include <collectps.h>
 
-extern config_t global_config;
+extern cps_config_t global_config;
 
 GThreadPool *workers_thread_pool = NULL;
 

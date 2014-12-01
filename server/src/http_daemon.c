@@ -6,7 +6,7 @@
 
 #include <collectps.h>
 
-extern config_t global_config;
+extern cps_config_t global_config;
 
 struct MHD_Daemon *collectps_daemon;
 

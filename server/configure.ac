@@ -38,6 +38,20 @@ then
     AC_DEFINE(HAVE_HTONLL, 1, [Define if the function htonll exists.])
 fi
 
+AH_TEMPLATE([HAVE_LIBCONFIG_1_3], [Defined if using old libconfig version 1.3])
+AC_MSG_NOTICE([Checking for libconfig >= 1.4])
+PKG_CHECK_MODULES([LIBCONFIG], [libconfig >= 1.4],,
+	[ 
+	AC_MSG_NOTICE([libconfig >= 1.4 not found. Checking for libconfig >= 1.3])
+		PKG_CHECK_MODULES([LIBCONFIG], [libconfig >= 1.3],
+				[
+					AC_DEFINE([HAVE_LIBCONFIG_1_3])
+					AC_MSG_NOTICE([OK, we are compiling with libconfig 1.3. Some features will be disabled (like @include)])
+				],
+				AC_MSG_ERROR([libconfig 1.3 or newer not found.])
+				)
+	]
+)
 
 
 GLIB_G_THREAD_INIT_NEEDED=0

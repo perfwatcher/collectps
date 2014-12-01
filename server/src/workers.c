@@ -9,7 +9,7 @@
 #include "config.h"
 #include <collectps.h>
 
-extern config_t global_config;
+extern cps_config_t global_config;
 
 static char *influxdb_full_url__series = NULL;
 

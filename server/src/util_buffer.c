@@ -13,7 +13,7 @@
 #include "config.h"
 #include <collectps.h>
 
-extern config_t global_config;
+extern cps_config_t global_config;
 
 #ifndef HAVE_HTONLL
 unsigned long long ntohll (unsigned long long n)

@@ -3,8 +3,7 @@
 
 #include "collectps.h"
 
-void config_init(int argc, char **argv);
-void convert_rule_dump_as_xml();
+void cps_config_init(int argc, char **argv);
 
 #endif
 /* vim: set filetype=c fdm=marker sw=4 ts=4 et : */

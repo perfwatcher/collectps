@@ -17,7 +17,7 @@
 
 #include "collectps.h"
 
-extern config_t global_config;
+extern cps_config_t global_config;
 
 pid_t exec_ourselves_as_child(char**argv_array) { /* {{{ */
     char *str;
@@ -229,7 +229,7 @@ int main(int argc, char **argv) {
     cmdline_str = get_command_line(argv_array);
     set_argv_for_child_process(argv_array);
 
-    config_init(argc, argv);
+    cps_config_init(argc, argv);
 
     if(global_config.daemonize) {
         /* When daemonizing, a child process will be launched with daemonization disabled */
