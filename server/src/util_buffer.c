@@ -60,7 +60,7 @@ int packet_buffer_alloc_buffer(packet_buffer_t *buf) { /* {{{ */
     buf->header.field.type = type;
 
     if(len > global_config.listener__buffer_max_size) {
-        L (LOGLEVEL_DEBUG, "Receiving a packet with length = %zd, which is bigger than buffer_max_size", len);
+        L (LOGLEVEL_WARNING, "Receiving a packet with length = %zd, which is bigger than buffer_max_size", len);
         rc = -3;
         goto packet_buffer_alloc_buffer__error;
     }
