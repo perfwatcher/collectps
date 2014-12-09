@@ -1,0 +1,33 @@
+log : {
+# level 0 critical
+# level 1 error / important
+# level 2 warning
+# level 3 info
+# level 4 debug
+# level 5 debug verbose
+#
+    level=2;
+    file="stdout";
+};
+
+daemon : {
+    working_dir="/var/run/collectps";
+    umask="0022";
+};
+
+server : (
+#    {
+#        hostname: "some_host"
+#        port: 25926
+#    },
+    {
+        
+        hostname: "localhost";
+        port: 25926;
+    }
+);
+
+agent : {
+    interval = 60;
+	max_cache_time = 300;
+};

@@ -1,0 +1,3 @@
+CollectPS agent
+
+Daemon that collects process metrics and send them to a CollectPS server
