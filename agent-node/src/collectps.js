@@ -41,7 +41,7 @@ function get_cps_servers_and_ports() {
 }
 
 function get_interval() {
-    return(cfg.has('Interval') ? (cfg.get('Interval') * 1000) : 10000);
+    return(cfg.has('Interval') ? (cfg.get('Interval') * 1000) : 60000);
 }
 
 /* Load the httpconfig User Interface */
